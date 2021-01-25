@@ -1,0 +1,28 @@
+一、注册表配置
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\Wds\rdpwd\Tds\tcp
+	PortNumber	RGDWORD	3389
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp
+	PortNumber	RGDWORD	3389
+”HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server“
+	fDenyTSConnections	REG_DWORD	0
+	
+二、服务
+Get-Service |?{$_.displayname -like '*Remote Desktop*'}
+#远程桌面服务列表
+Name          Status DisplayName
+----          ------ -----------
+SessionEnv   Running Remote Desktop Configuration
+TermService  Running Remote Desktop Services
+UmRdpService Running Remote Desktop Services UserMode Port Redirector
+
+#重启 TermService
+Restart-Service TermService -Force
+
+三、应用和功能
+>>远允许应用或功能通过防火墙程桌面  启用
+
+四、防火墙规则
+防火墙》高级》入站规则》远程桌面
+
+五、视图配置
+电脑>右击属性>远程设置>允许远程连接此计算机

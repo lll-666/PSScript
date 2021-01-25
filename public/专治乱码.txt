@@ -1,0 +1,78 @@
+$OutputEncoding = New-Object -typename System.Text.UTF8Encoding
+cat .\train_data.txt -encoding UTF8|where {$_ -notmatch "(null)|(404\s)"} |Out-File result.txt -encoding utf8
+
+win10:
+$PSVersionTable
+$PSDefaultParameterValues['Out-File:Encoding'] = 'utf8'
+<your command> | out-file 1.txt -encoding utf8
+
+windows终端输出乱码，终极解决方案：
+java -Dfile.encoding=utf-8 -jar xxx.jar
+
+server.natappfree.cc:42585
+
+
+powershell
+	#1.创建PROFILE默认文件
+	New-Item $PROFILE -ItemType File -Force
+	#2.添加如下内容
+	[System.Console]::OutputEncoding=[System.Text.Encoding]::GetEncoding(936)
+	#3.设置执行策略
+	Set-ExecutionPolicy Unrestricted -Force
+	
+CMD
+	1.进入注册表
+	HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor
+	2.新增autorun键,内容如下
+	autorun 数据为：chcp 65001 类型为:字符串
+	
+HKEY_CURRENT_USER\Console
+	CodePage 65001	DWORD
+	
+win10	
+	HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor
+		autorun	"chcp 65001" String
+	HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe
+	HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe
+		CodePage 65001	DWORD
+		
+win server 2012
+	HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor
+		autorun	"chcp 65001" String
+	HKEY_CURRENT_USER\Console\%SystemRoot%_system32_cmd.exe
+	HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe
+	HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe
+		CodePage 65001	DWORD
+
+
+
+win7-54.143,测试CMD默认编码
+	1.如下操作后重启无效
+		修改项:HKEY_CURRENT_USER\Console\%SystemRoot%_system32_cmd.exe
+		删除CodePage 65001 DWORD
+	2.如下操作后重启生效
+		修改项:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor
+		删除 autorun	"chcp 65001" String
+	
+win-server-2018-8.30,测试CMD默认编码
+	1.如下操作后重启无效
+		修改项:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor
+		删除 autorun	"chcp 65001" String
+	2.如下操作后重启生效
+		修改项:HKEY_CURRENT_USER\Console\%SystemRoot%_system32_cmd.exe
+		删除CodePage 65001 DWORD
+		
+win7-54.143,测试PS默认编码
+	1.如下操作后重启无效
+		HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe
+			删除 CodePage 65001	DWORD
+	
+win-server-2018-8.30,测试PS默认编码
+	1.如下操作后重启无效
+		HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe
+		HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe
+			删除 CodePage 65001	DWORD
+		
+	
+	
+	

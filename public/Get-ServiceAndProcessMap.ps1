@@ -1,0 +1,1 @@
+tasklist /svc /fo csv /nh|where{($_ -notlike '*暂缺*') -and ($_ -notlike '*N/A*')}

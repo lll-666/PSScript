@@ -1,0 +1,16 @@
+关于netsh的命令返回结果解析
+
+show:
+	$result.count>4		成功[xxxx有匹配规则输出]
+	$result.count=3 	成功[没有与指定标准相匹配的规则。--No rules match the specified criteria.]
+
+add:
+	$result.count=2		成功[确定。--Ok.]
+	$result.count=81	失败[A specified port value is not valid.--A specified protocol value is not valid.--A specified value is not valid.]
+	$result.count=77	失败[指定的端口值无效。--指定的协议值无效。--指定的值无效。]
+	$result.count=2		失败[请求的操作需要提升(作为管理员运行)。--The requested operation requires elevation (Run as administrator).]
+
+delete:
+	$result.count=4		成功[Deleted 1 rule(s).Ok.--已删除 1 规则。确定。]
+	$result.count=3 	成功[没有与指定标准相匹配的规则。--No rules match the specified criteria.]
+	$result.count=2		失败[请求的操作需要提升(作为管理员运行)。--The requested operation requires elevation (Run as administrator).]

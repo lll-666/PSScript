@@ -1,0 +1,10 @@
+AhnLab V3 Internet Security 8.0
+
+$softwareName='AhnLab V3 Internet Security 8.0'
+cd HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall
+ls|%{If(($values=Get-ItemProperty $_.PSChildName).displayName -like $softwareName){$values}}|format-table DisplayName,DisplayVersion,UninstallString,InstallDate,InstallSource
+
+
+Get-WmiObject win32_service|?{$_.name -like '*V3*'}|format-list Name,ProcessId,StartMode,State,Status,ExitCode,DesktopInteract,ServiceType,AcceptPause,AcceptStop,PathName
+
+Get-Service 'V3 Service'|select Name,CanPauseAndContinue,CanShutdown,CanStop,Status,ServiceType

@@ -1,0 +1,7 @@
+http://172.17.8.86/#/staff?wlanuserip=192.168.54.202&wlanacname=226&ssid=cxd&nasip=192.168.54.226&mac=862782800c16&t=wireless-v2-plain&url=
+http://172.17.8.86/#/staff?wlanuserip=172.17.8.147&wlanacname=226&ssid=cxd&nasip=192.168.54.226&mac=005056b04125&t=wireless-v2-plain&url=
+http://172.17.8.86/#/staff?wlanuserip=172.17.8.216&wlanacname=226&ssid=cxd&nasip=192.168.54.226&mac=000c29f41585&t=wireless-v2-plain&url=
+http://172.17.8.86/#/staff?wlanuserip=192.168.54.158&wlanacname=226&ssid=cxd&nasip=192.168.54.226&mac=64006a1c2373&t=wireless-v2-plain&url=
+http://172.17.8.86/#/staff?wlanuserip=172.17.8.163&wlanacname=226&ssid=cxd&nasip=192.168.54.226&mac=0050568c6fbd&t=wireless-v2-plain&url=
+http://172.17.8.86/#/staff?wlanuserip=172.17.8.63&wlanacname=226&ssid=cxd&nasip=192.168.54.226&mac=0050568c7372&t=wireless-v2-plain&url=
+

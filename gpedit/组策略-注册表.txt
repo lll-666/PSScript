@@ -1,0 +1,7 @@
+进入组策略：gpedit.msc
+进入注册表：regedit
+
+【计算机设置-》Windows设置-》安全设置-》本地策略-》安全选项：MACHINE\System\CurrentControlSet\Control\Lsa】
+
+
+
