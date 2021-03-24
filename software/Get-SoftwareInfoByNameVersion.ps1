@@ -1,5 +1,5 @@
 Function Get-SoftwareInfoByNameVersion([String] $name,[String] $version){
-	$Key='Software\Microsoft\Windows\CurrentVersion\Uninstall','SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall';
+	$Key=@('Software\Microsoft\Windows\CurrentVersion\Uninstall','SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall');
 	If([IntPtr]::Size -eq 8){$Key+='SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall'}
 	Foreach($_ In $Key){
 	  $Hive='LocalMachine';

@@ -12,6 +12,7 @@ Function Black-Software{
 	
 	$retVal=Get-SoftwareInfoByNameVersion $softwareName $softwareVersion;
 	If($retVal -eq $null){Return Ret-Success "${business}There is no software named $softwareName in the system"}
+	If(!$isAuto){Return "There is a prohibited software named $softwareName on the system"}
 
 	If([String]::isNullOrEmpty($retVal.UninstallString)){Return "Uninstall command does not exist, unable to uninstall"}
 

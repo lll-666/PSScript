@@ -18,16 +18,18 @@ Measure-Command{
 	$ScriptBlock={
 		param($i)
 		mkdir 'C:\Users\Administrator\Desktop\tmp2'
+		
 		sleep 10
+		<#
 		$web=New-Object System.Net.WebClient
 		$web.Encoding=[System.Text.Encoding]::UTF8
 		$src='http://172.17.8.218:9888/nodeManager/file/download/temp?fileName=ip-guard.exe&dir=win/bit64'
 		$des='C:\Users\Administrator\Desktop\tmp1\ip-guard'
 		$web.DownloadFile("$src", "${des}")
-		'============================'
+		#>
 	}
 	
-	foreach($i in 1..1){
+	foreach($i in 1..5){
 	   $Job = [powershell]::Create().AddScript($ScriptBlock).AddArgument($i)
 	   $Job.RunspacePool = $RunspacePool
 	   $Jobs += New-Object PSObject -Property @{

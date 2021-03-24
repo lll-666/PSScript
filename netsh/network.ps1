@@ -17,4 +17,8 @@ xp以上
 	netsh interface ipv4 show address
 	
 #查看终端当前活跃的IP	
-(Get-WmiObject -class win32_NetworkAdapterConfiguration|?{$_.ipenabled -like $true -and $_.ServiceName -ne 'VMnetAdapter'}).ipaddress[0]
+(gwmi -class win32_NetworkAdapterConfiguration|?{$_.ipenabled -like $true -and $_.ServiceName -ne 'VMnetAdapter'}).ipaddress[0]
+
+getmac.exe /FO CSV | Select -Skip 1 | ConvertFrom-Csv -Header MAC, Transport
+gwmi -class win32_NetworkAdapterConfiguration|%{if($_.ipaddress -ne $null){ $_.ipaddress[0]}}
+gwmi -class win32_NetworkAdapterConfiguration|?{$_.ipenabled -like $true -and $_.ServiceName -ne 'VMnetAdapter' -and $_.DefaultIPGateway}|%{if($_.ipaddress -ne $null){ $_.ipaddress[0]}}

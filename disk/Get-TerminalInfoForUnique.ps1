@@ -26,6 +26,8 @@ Get-WmiObject win32_physicalmedia | Select SerialNumber
 
 #5.Windows的产品ID
 	(get-itemproperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").ProductId 已验证
+	gpv "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" ProductId
+	(gp "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").ProductId
 	#与实际不符
 	(Get-WmiObject softwareLicensingService).OA3xOriginalProductKey
 	

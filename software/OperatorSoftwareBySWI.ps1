@@ -26,7 +26,7 @@ Function OperatorSoftwareBySWI([String]$hostUrl,[String]$softwarePath,$isSilent=
 		If(!(Is-Success $Res)){Return $Res}
 	}
 	
-	If($isSilent){If([String]::IsNullOrEmpty($param)){$param='/quiet /norestart /s'}}else{$param=$null}
+	If($isSilent){If([String]::IsNullOrEmpty($param)){$param='/quiet /norestart /s'}}Else{$param=$null}
 	$SWIServiceName='SWIserv';
 	Restart-Service $SWIServiceName -ErrorAction SilentlyContinue
 	If(!$?){
@@ -45,8 +45,10 @@ Function OperatorSoftwareBySWI([String]$hostUrl,[String]$softwarePath,$isSilent=
 	If(!$?){Return Print-Exception "${business}spsv $SWIServiceName"}
 	
 	Try{
-		(gsv $SWIServiceName).Start("{`"exe`":`"$softwarePath`",`"arg`":`"$param`"}")
-		sleep 1
+		While($sv=gsv $SWIServiceName -ErrorAction SilentlyContinue){
+			If($sv.status -eq 'Running'){sleep -Milliseconds 200;Continue}
+			$sv.Start("{`"exe`":`"$softwarePath`",`"arg`":`"$param`"}");Break
+		}
 	}Catch{
 		Return Print-Exception "${business}(gsv $SWIServiceName).Start("+'"{`"exe`":'+"$softwarePath"+',`"arg`":`"/s`"}")'
 	}
