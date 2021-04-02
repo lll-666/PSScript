@@ -145,12 +145,11 @@ Function Is-KbInstalled($kbNum){
 	$Key='SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages';
 	$RegHive=[Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey('LocalMachine',$env:COMPUTERNAME);
 	$RegKey=$RegHive.OpenSubKey($Key);
-	If([string]::IsNullOrEmpty($RegKey)){return $false}
-    $parttern="Package_for_KB$kbNum~[a-zA-Z0-9]*~[a-zA-Z0-9]*~~"
+	If([string]::IsNullOrEmpty($RegKey)){Return $false}
     $ret=$false;
     $matched=$false;
 	$RegKey.GetSubKeyNames()|ForEach{
-        if($_ -match $parttern){
+        if($_ -match "Package_for_KB${kbNum}~[a-zA-Z0-9]*~[a-zA-Z0-9]*~~"){
             $matched=$true
             $SubKey=$RegKey.OpenSubKey($_);
             $tmp=$subkey.GetValue('CurrentState');
@@ -163,9 +162,8 @@ Function Is-KbInstalled($kbNum){
         }
     }
     if(!$matched){
-        $parttern="Package_for_KB"+$kbNum +"_RTM~[a-zA-Z0-9]*~[a-zA-Z0-9]*~~"
         $RegKey.GetSubKeyNames()|ForEach{
-            if($_ -match $parttern){
+            if($_ -match "Package_for_KB${kbNum}_RTM~[a-zA-Z0-9]*~[a-zA-Z0-9]*~~"){
                 $SubKey=$RegKey.OpenSubKey($_);
                 $tmp=$subkey.GetValue('CurrentState');
 	            $SubKey.Close()

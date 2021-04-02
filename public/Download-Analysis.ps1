@@ -17,9 +17,10 @@ Measure-Command{
 	$Jobs = @()
 	$ScriptBlock={
 		param($i)
-		mkdir 'C:\Users\Administrator\Desktop\tmp2'
-		
-		sleep 10
+		$dir='C:\Users\Administrator\Desktop\tmp2'
+		If(Test-Path $dir){$null=mkdir 'C:\Users\Administrator\Desktop\tmp2' -force}
+		$i >> "$dir/test.txt"
+ 		sleep 1
 		<#
 		$web=New-Object System.Net.WebClient
 		$web.Encoding=[System.Text.Encoding]::UTF8
@@ -32,18 +33,14 @@ Measure-Command{
 	foreach($i in 1..5){
 	   $Job = [powershell]::Create().AddScript($ScriptBlock).AddArgument($i)
 	   $Job.RunspacePool = $RunspacePool
-	   $Jobs += New-Object PSObject -Property @{
-		  Server = $_
-		  Pipe = $Job
-		  Result = $Job.BeginInvoke()
-	   }
+	   $Jobs += $Job.BeginInvoke()
 	}
 	
 	Write-Host "Waiting.." -NoNewline
 	Do{
 	   Write-Host "." -NoNewline
 	   Start-Sleep -Seconds 1
-	}While($Jobs.Result.IsCompleted -contains $false)
+	}While($Jobs.IsCompleted -contains $false)
 	Write-Host "All jobs completed!"
 }
 
