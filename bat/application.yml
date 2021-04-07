@@ -1,0 +1,18 @@
+spring:
+  messages:
+    encoding: utf-8
+  application:
+    name: nodeconnector
+  profiles:
+    active: prod
+server:
+  port: 9887
+---
+spring:
+  profiles: prod
+rocket-mq:
+  name-srv-addr: 172.17.8.218:9876
+  enable: true
+logging:
+  config: classpath:logback-spring-pro.xml
+hostIp: 172.17.8.179
